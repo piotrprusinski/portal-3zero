@@ -29,8 +29,6 @@
 						<li class="list-group-item">
 							<p th:text="${article.id}" />
 							<a th:text="${article.title}" th:href='@{/article/{id}(id=${article.id})}'/>
-							<button th:id="${article.id}" type="button"
-								class="btn btn-primary">Kup</button>
 						</li>
 					</tr>
 				</ul>

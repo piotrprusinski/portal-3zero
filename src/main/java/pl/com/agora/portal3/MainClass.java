@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 
 import pl.com.agora.article.client.ArticleClient;
 import pl.com.agora.article.client.ArticleClientFactory;
+import pl.com.agora.springboot.comments.CommentClient;
+import pl.com.agora.springboot.comments.CommentClientFactory;
 
 @SpringBootApplication
 public class MainClass {
@@ -20,6 +22,14 @@ public class MainClass {
 			@Value("${articles.serviceHost}") String serviceHost,
 			@Value("${articles.servicePort}") int servicePort) throws Exception {
 		return new ArticleClientFactory().createSimpleArticleClient(
+				serviceHost, servicePort);
+	}
+
+	@Bean
+	public CommentClient commentClient(
+			@Value("${comment.serviceHost}") String serviceHost,
+			@Value("${comment.servicePort}") int servicePort) throws Exception {
+		return new CommentClientFactory().createSimpleCommentClient(
 				serviceHost, servicePort);
 	}
 }

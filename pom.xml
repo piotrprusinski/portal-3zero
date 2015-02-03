@@ -61,6 +61,12 @@
 			<artifactId>articles-client</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+
+		<dependency>
+			<groupId>pl.com.agora.springboot.comments</groupId>
+			<artifactId>comments-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 
