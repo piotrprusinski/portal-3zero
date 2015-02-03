@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<title>Layout</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+	href="../../css/bootstrap.min.css" />
+
+<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.1/jquery.min.js"
+	th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="navbar">
+			<div class="navbar-inner">
+				<a class="brand"
+					href="https://github.com/ultraq/thymeleaf-layout-dialect">
+					Error </a>
+				<ul class="nav">
+				</ul>
+			</div>
+		</div>
+		<h1 layout:fragment="header">Message</h1>
+		<div layout:fragment="content">
+
+			<div class="bs-example">
+				<ul class="list-group">
+					<p th:text="${message}" />
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -27,7 +27,7 @@
 
 			<div class="bs-example">
 				<ul class="list-group">
-					<p th:text="${article.content}" />
+					<p th:utext="${article.content}" />
 				</ul>
 			</div>
 		</div>
@@ -52,26 +52,8 @@
 		      <input type="hidden" th:field="*{articleId}" th:value="*{articleId}" name ="articleId" />
 			<input type="submit" class="btn btn-primary btn-lg" value="Dodaj"/>
 		</form>
+		<a id="comments"></a>
 	</div>
 </body>
-<input type="hidden" id="payurl" th:value="*{payurl}" />
-<script type="text/javascript">
-	$(".btn-primary").click(function(btn) {
-		var payUrl = $("#payurl").val();
-		var id = btn.currentTarget.id;
-		$.ajax({
-			url : payUrl,
-			type : 'GET',
-			context : document.body,
-			data : {
-				"id" : id
-			}
-		}).done(function(response) {
-			console.log(this);
-			console.log(response);
-			$("#" + response).remove();
-		});
-	});
-</script>
 
 </html>

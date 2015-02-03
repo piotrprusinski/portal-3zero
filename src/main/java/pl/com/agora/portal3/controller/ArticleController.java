@@ -34,6 +34,7 @@ public class ArticleController {
 	public String getArticle(@PathVariable("id") String id,
 			Map<String, Object> model) throws InterruptedException,
 			ExecutionException {
+		LOGGER.info("display article");
 		Future<Article> article = articleClient.load(id);
 		Future<List<Comment>> comments = commentClient.getComments(id);
 		CommentDto value = new CommentDto();
@@ -52,12 +53,12 @@ public class ArticleController {
 		comment.setAuthor("");
 		comment.setContent(commentDto.getContent());
 		try {
-			Future<Void> putComment = commentClient.putComment(comment);
+			Future<Void> putComment = commentClient.putComment(comment, commentDto.getArticleId());
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 			return e.getMessage();
 		}
 
-		return "redirect:/article/" + commentDto.getArticleId();
+		return "redirect:/article/" + commentDto.getArticleId() + "#comments";
 	}
 }
