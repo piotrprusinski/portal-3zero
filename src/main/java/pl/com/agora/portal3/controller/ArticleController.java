@@ -22,43 +22,40 @@ import pl.com.agora.springboot.comments.CommentClient;
 @Controller
 public class ArticleController {
 
-	@Autowired
-	public ArticleClient articleClient;
-	@Autowired
-	public CommentClient commentClient;
+    @Autowired
+    public ArticleClient articleClient;
+    @Autowired
+    public CommentClient commentClient;
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(ArticleController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ArticleController.class);
 
-	@RequestMapping("/article/{id}")
-	public String getArticle(@PathVariable("id") String id,
-			Map<String, Object> model) throws InterruptedException,
-			ExecutionException {
-		LOGGER.info("display article");
-		Future<Article> article = articleClient.load(id);
-		Future<List<Comment>> comments = commentClient.getComments(id);
-		CommentDto value = new CommentDto();
-		value.setArticleId(article.get().getId());
-		model.put("article", article.get());
-		model.put("comment", value);
-		model.put("comments", comments.get());
-		return "article";
-	}
+    @RequestMapping("/article/{id}")
+    public String getArticle(@PathVariable("id") String id, Map<String, Object> model) throws InterruptedException,
+            ExecutionException {
+        LOGGER.info("display article");
+        Future<Article> article = articleClient.load(id);
+        Future<List<Comment>> comments = commentClient.getComments(id);
+        CommentDto value = new CommentDto();
+        value.setArticleId(article.get().getId());
+        model.put("article", article.get());
+        model.put("comment", value);
+        model.put("comments", comments.get());
+        return "article";
+    }
 
-	@RequestMapping(value = "/comment/add", method = RequestMethod.POST)
-	public String addArticle(CommentDto commentDto)
-			throws InterruptedException, ExecutionException {
-		Comment comment = new Comment();
-		comment.setArticleId(commentDto.getArticleId());
-		comment.setAuthor("");
-		comment.setContent(commentDto.getContent());
-		try {
-			Future<Void> putComment = commentClient.putComment(comment, commentDto.getArticleId());
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);
-			return e.getMessage();
-		}
+    @RequestMapping(value = "/comment/add", method = RequestMethod.POST)
+    public String addArticle(CommentDto commentDto) throws InterruptedException, ExecutionException {
+        Comment comment = new Comment();
+        comment.setArticleId(commentDto.getArticleId());
+        comment.setAuthor("");
+        comment.setContent(commentDto.getContent());
+        try {
+            Future<Void> putComment = commentClient.putComment(commentDto.getArticleId(), comment);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+            return e.getMessage();
+        }
 
-		return "redirect:/article/" + commentDto.getArticleId() + "#comments";
-	}
+        return "redirect:/article/" + commentDto.getArticleId() + "#comments";
+    }
 }

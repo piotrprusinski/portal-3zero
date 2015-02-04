@@ -36,24 +36,4 @@
 		</div>
 	</div>
 </body>
-<input type="hidden" id="payurl" th:value="*{payurl}" />
-<script type="text/javascript">
-
-$(".btn-primary").click(function(btn){
-	var payUrl = $( "#payurl" ).val();
-	var id = btn.currentTarget.id;
-	$.ajax({
-		url : payUrl,
-		type: 'GET',
-		context : document.body,
-		data : {"id" : id}
-	}).done(function(response) {
-		console.log(this);
-		console.log(response);
-		$( "#"+response ).remove();
-	});
-});
-	
-</script>
-
 </html>
